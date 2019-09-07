@@ -1,0 +1,4 @@
+/superlists/db.sqlite3
+*.log
+.idea/
+*.pyc
