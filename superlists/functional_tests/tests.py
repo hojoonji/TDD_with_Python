@@ -1,5 +1,6 @@
 import time
 import os
+from pyvirtualdisplay import Display
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
@@ -11,12 +12,29 @@ MAX_WAIT = 10
 
 
 class NewVisitorTest(StaticLiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        os_type = os.environ.get('OS_TYPE')
+        print(f'os_type in: {os_type}')
+        if  os_type:
+            display = Display(visible=0, size=(800,600))
+            display.start()
+            
+    @classmethod
+    def tearDownClass(cls):
+        os_type = os.environ.get('OS_TYPE')
+        print(f'os_type out: {os_type}')
+        if  os_type:
+            display.stop()
 
-    def setUp(self):
+    def setUp(self): 
         self.browser = webdriver.Firefox()
         staging_server = os.environ.get('STAGING_SERVER')
         if staging_server:
+            print(f"staring server is : {staging_server}")
             self.live_server_url = 'http://' + staging_server
+        else:
+            print("no staging server")
 
     def tearDown(self):
         self.browser.quit()
