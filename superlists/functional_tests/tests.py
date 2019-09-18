@@ -17,21 +17,21 @@ class NewVisitorTest(StaticLiveServerTestCase):
         os_type = os.environ.get('OS_TYPE')
         print(f'os_type in: {os_type}')
         if  os_type:
-            display = Display(visible=0, size=(800,600))
-            display.start()
+            cls.display = Display(visible=0, size=(800,600))
+            cls.display.start()
             
     @classmethod
     def tearDownClass(cls):
         os_type = os.environ.get('OS_TYPE')
         print(f'os_type out: {os_type}')
         if  os_type:
-            display.stop()
+            cls.display.stop()
 
     def setUp(self): 
         self.browser = webdriver.Firefox()
         staging_server = os.environ.get('STAGING_SERVER')
         if staging_server:
-            print(f"staring server is : {staging_server}")
+            print(f"staging server is : {staging_server}")
             self.live_server_url = 'http://' + staging_server
         else:
             print("no staging server")
@@ -131,6 +131,9 @@ class NewVisitorTest(StaticLiveServerTestCase):
         # 둘 다 만족하고 잠자리에 든다.
 
     def test_layout_and_styling(self):
+        if os.environ.get('OS_TYPE'):
+            return
+
         # 에디스는 홈페이지로 간다.
         self.browser.get(self.live_server_url)
         self.browser.set_window_size(1024, 768)
