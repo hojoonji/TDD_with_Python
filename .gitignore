@@ -3,3 +3,4 @@
 .idea/
 *.pyc
 /superlists/static/
+.env
