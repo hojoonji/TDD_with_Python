@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.core.exceptions import ValidationError
+from django.utils.html import escape
 from django.http import HttpResponse
 
 from lists.models import Item, List
@@ -13,7 +15,13 @@ def view_list(request, list_id):
 
 def new_list(request):
     list_ = List.objects.create()
-    Item.objects.create(text=request.POST['item_text'], list=list_)
+    item = Item.objects.create(text=request.POST['item_text'], list=list_)
+    try:
+        item.full_clean()
+    except ValidationError:
+        expected_error = escape('빈 아이템을 입력할 수 없습니다')
+        return render(request, 'home.html', {'error': expected_error})
+
     return redirect(f'/lists/{list_.id}/')
 
 def add_item(request, list_id):
