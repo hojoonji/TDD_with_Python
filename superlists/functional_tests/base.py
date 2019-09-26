@@ -14,11 +14,19 @@ MAX_WAIT = 10
 class FunctionalTest(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         os_type = os.environ.get('OS_TYPE')
         print(f'os_type in: {os_type}')
         if  os_type:
             cls.display = Display(visible=0, size=(800,600))
             cls.display.start()
+
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            print(f"staging server is : {staging_server}")
+            cls.live_server_url = 'http://' + staging_server
+        else:
+            print(f"no staging server:{cls.live_server_url}")
 
     @classmethod
     def tearDownClass(cls):
@@ -29,12 +37,6 @@ class FunctionalTest(StaticLiveServerTestCase):
 
     def setUp(self): 
         self.browser = webdriver.Firefox()
-        staging_server = os.environ.get('STAGING_SERVER')
-        if staging_server:
-            print(f"staging server is : {staging_server}")
-            self.live_server_url = 'http://' + staging_server
-        else:
-            print("no staging server")
 
     def tearDown(self):
         self.browser.quit()
