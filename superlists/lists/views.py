@@ -15,12 +15,14 @@ def view_list(request, list_id):
 
 def new_list(request):
     list_ = List.objects.create()
-    item = Item.objects.create(text=request.POST['item_text'], list=list_)
+    item = Item(text=request.POST['item_text'], list=list_)
     try:
         item.full_clean()
+        item.save()
     except ValidationError:
-        expected_error = escape('빈 아이템을 입력할 수 없습니다')
-        return render(request, 'home.html', {'error': expected_error})
+        list_.delete()
+        error = escape('빈 아이템을 입력할 수 없습니다')
+        return render(request, 'home.html', {'error': error})
 
     return redirect(f'/lists/{list_.id}/')
 
