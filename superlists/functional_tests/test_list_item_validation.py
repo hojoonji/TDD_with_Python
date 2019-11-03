@@ -36,6 +36,7 @@ class ItemValidationTest(FunctionalTest):
 
         # 그년 이번에는 제대로 입력하기로 했다.
         self.browser.find_element_by_id('id_new_item').send_keys('차 만들기')
+        self.browser.find_element_by_id('id_new_item').send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: 우유 사기')
         self.wait_for_row_in_list_table('2: 차 만들기')
 
