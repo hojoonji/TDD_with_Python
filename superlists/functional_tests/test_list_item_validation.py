@@ -34,3 +34,22 @@ class ItemValidationTest(FunctionalTest):
         self.wait_for_row_in_list_table('1: 우유 사기')
         self.wait_for_row_in_list_table('2: 차 만들기')
 
+    def test_cannot_add_duplicate_items(self):
+        # 에디스는 홈페이지로 가서 새로운 리스트를 시작한다.
+        self.browser.get(self.live_server_url)
+        self.get_item_input_box().send_keys('Buy wellies')
+        self.get_item_input_box().send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: Buy wellies')
+
+        # 그녀는 실수로 똑같은 아이템을 입력했다.
+        self.get_item_input_box().send_keys('Buy wellies')
+        self.get_item_input_box().send_keys(Keys.ENTER)
+
+        # 에러 메세지가 발생한 것을 확인했다.
+        self.wait_for(lambda: self.assertEqual(
+            self.browser.find_element_by_css_selector('.has-error').text,
+            '리스트에 같은 아이템이 이미 있습니다'
+        ))
+
+
+
