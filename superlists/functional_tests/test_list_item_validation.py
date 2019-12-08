@@ -7,6 +7,10 @@ from selenium.common.exceptions import WebDriverException
 
 
 class ItemValidationTest(FunctionalTest):
+    def get_error_element(self):
+        return self.browser.find_element_by_css_selector('.has-error')
+
+
     def test_cannot_add_empty_list_items(self):
         # 에디스는 홈페이지로 가서 실수로 빈 목록을 전송했다.
         self.browser.get(self.live_server_url)
@@ -47,9 +51,31 @@ class ItemValidationTest(FunctionalTest):
 
         # 에러 메세지가 발생한 것을 확인했다.
         self.wait_for(lambda: self.assertEqual(
-            self.browser.find_element_by_css_selector('.has-error').text,
+            self.get_error_element(),
             '리스트에 같은 아이템이 이미 있습니다'
         ))
+
+    def test_error_messages_are_cleared_on_input(self):
+        # 에디스는 새로운 리스트를 시작하고 validation error 를 야기시켰다.
+        self.browser.get(self.live_server_url)
+        self.get_item_input_box().send_keys('Banter too thick')
+        self.get_item_input_box().send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: Banter too thick')
+        self.get_item_input_box().send_keys('Banter too thick')
+        self.get_item_input_box().send_keys(Keys.ENTER)
+
+        self.wait_for(lambda: self.assertTrue(
+            self.get_error_element().is_displayed()
+        ))
+
+        # 그녀는 에러를 클리어하기 위해 input box에 타이핑하기 시작했다.
+        self.get_item_input_box().send_keys('a')
+
+        # 그녀는 에러 메세지가 사라지는 걸 보았다.
+        self.wait_for(lambda: self.assertFalse(
+            self.get_error_element().is_displayed()
+        ))
+
 
 
 
