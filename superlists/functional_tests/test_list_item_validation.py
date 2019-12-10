@@ -10,7 +10,6 @@ class ItemValidationTest(FunctionalTest):
     def get_error_element(self):
         return self.browser.find_element_by_css_selector('.has-error')
 
-
     def test_cannot_add_empty_list_items(self):
         # 에디스는 홈페이지로 가서 실수로 빈 목록을 전송했다.
         self.browser.get(self.live_server_url)
@@ -51,7 +50,7 @@ class ItemValidationTest(FunctionalTest):
 
         # 에러 메세지가 발생한 것을 확인했다.
         self.wait_for(lambda: self.assertEqual(
-            self.get_error_element(),
+            self.get_error_element().text,
             '리스트에 같은 아이템이 이미 있습니다'
         ))
 
