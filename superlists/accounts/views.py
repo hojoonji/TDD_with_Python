@@ -16,8 +16,8 @@ def send_login_email(request):
     print('saving uid', uid, 'for email', email, file=sys.stderr)
     url = request.build_absolute_uri(f'/accounts/login?uid={uid}')
     send_mail(
-        'Your login link for superlistss',
-        f'Use this link to login:\n\n{url}',
+        'Your login link for superlists',
+        f'Use this link to log in:\n\n{url}',
         'noreply@superlists',
         [email])
     return render(request, 'login_email_sent.html')
