@@ -1,10 +1,10 @@
-from django.core import  mail
+from django.core import mail
 from selenium.webdriver.common.keys import Keys
 import re
 from .base import FunctionalTest
 
 TEST_EMAIL='hj@toss.im'
-SUBJECT='Your login link for superlists'
+SUBJECT='Your login link for Superlists'
 
 class LoginTest(FunctionalTest):
 
@@ -39,5 +39,6 @@ class LoginTest(FunctionalTest):
         
         navbar = self.browser.find_element_by_css_selector('.navbar')
         self.assertIn(TEST_EMAIL, navbar.text)
+
 
 
