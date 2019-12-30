@@ -32,14 +32,14 @@ class FunctionalTest(StaticLiveServerTestCase):
         super().setUpClass()
         os_type = os.environ.get('OS_TYPE')
         print(f'os_type in: {os_type}')
-        if  os_type:
+        if os_type:
             cls.display = Display(visible=0, size=(800,600))
             cls.display.start()
 
-        staging_server = os.environ.get('STAGING_SERVER')
-        if staging_server:
-            print(f"staging server is : {staging_server}")
-            cls.live_server_url = 'http://' + staging_server
+        cls.staging_server = os.environ.get('STAGING_SERVER')
+        if cls.staging_server:
+            print(f"staging server is : {cls.staging_server}")
+            cls.live_server_url = 'http://' + cls.staging_server
         else:
             print(f"no staging server:{cls.live_server_url}")
 
