@@ -42,7 +42,7 @@ class ItemValidationTest(FunctionalTest):
     def test_cannot_add_duplicate_items(self):
         # 에디스는 홈페이지로 가서 새로운 리스트를 시작한다.
         self.browser.get(self.live_server_url)
-        self.add_list_item('Buy wellies)')
+        self.add_list_item('Buy wellies')
 
         # 그녀는 실수로 똑같은 아이템을 입력했다.
         self.get_item_input_box().send_keys('Buy wellies')

@@ -155,8 +155,6 @@ class NewListTest(TestCase):
 
 
 
-
-
 class NewItemTest(TestCase):
 
     def test_passes_correct_list_to_template(self):
@@ -165,5 +163,11 @@ class NewItemTest(TestCase):
         response = self.client.get(f'/lists/{correct_list.id}/')
         self.assertEqual(response.context['list'], correct_list)
 
+
+class MyListsTest(TestCase):
+
+    def test_my_lists_url_renders_my_lists_template(self):
+        response = self.client.get('/lists/users/a@b.com/')
+        self.assertTemplateUsed(response, 'my_lists.html')
 
 
