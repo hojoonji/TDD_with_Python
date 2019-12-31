@@ -1,13 +1,11 @@
 import time
 import os
 from pyvirtualdisplay import Display
-from unittest import skip
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
-
+from .server_tools import reset_database
 
 MAX_WAIT = 10
 
@@ -37,9 +35,14 @@ class FunctionalTest(StaticLiveServerTestCase):
             cls.display.start()
 
         cls.staging_server = os.environ.get('STAGING_SERVER')
+        cls.staging_user = os.environ.get('STAGING_USER')
+        cls.staging_pwd = os.environ.get('STAGING_PWD')
+        cls.stating_port = os.environ.get('STAGING_PORT')
+
         if cls.staging_server:
             print(f"staging server is : {cls.staging_server}")
             cls.live_server_url = 'http://' + cls.staging_server
+            reset_database(cls.staging_user, cls.staging_pwd, cls.staging_server, cls.stating_port)
         else:
             print(f"no staging server:{cls.live_server_url}")
 
