@@ -1,3 +1,4 @@
+import os
 import random
 from fabric.contrib.files import append, exists
 from fabric.api import  cd, env, local, run
@@ -37,6 +38,8 @@ def _create_or_update_dotenv():
             'abcdefghijklmnopqrstuvwxyz0123456789', k=50
         ))
         append('./superlists/.env', f'DJANGO_SECRET_KEY={new_secret}')
+    email_password = os.environ['EMAIL_PASSWORD']
+    append('./superlists/.env', f'EMAIL_PASSWORD={email_password}')
 
 def _update_static_files():
     run('./virtualenv/bin/python ./superlists/manage.py collectstatic --noinput')
