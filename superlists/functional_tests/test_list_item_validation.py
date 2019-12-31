@@ -20,10 +20,11 @@ class ItemValidationTest(FunctionalTest):
         self.wait_for(lambda: self.browser.find_elements_by_css_selector('#id_text:invalid'))
 
         # 그녀는 이번에는 제대로 된 텍스트를 입력했고 제대로 작동했다. 
-        self.get_item_input_box().send_keys('우유 사기')
+        # self.get_item_input_box().send_keys('우유 사기')
+        self.add_list_item('우유 사기')
         self.wait_for(lambda: self.browser.find_elements_by_css_selector('#id_text:valid'))
-        self.get_item_input_box().send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: 우유 사기')
+        # self.get_item_input_box().send_keys(Keys.ENTER)
+        # self.wait_for_row_in_list_table('1: 우유 사기')
 
         # 그녀는 다시 빈 아이템을 입력해보기로 했다. 
         self.get_item_input_box().send_keys(Keys.ENTER)
@@ -32,17 +33,16 @@ class ItemValidationTest(FunctionalTest):
         self.wait_for(lambda: self.browser.find_elements_by_css_selector('#id_text:invalid'))
 
         # 그년 이번에는 제대로 입력하기로 했다.
-        self.get_item_input_box().send_keys('차 만들기')
-        self.get_item_input_box().send_keys(Keys.ENTER)
+        self.add_list_item('차 만들기')
+        # self.get_item_input_box().send_keys('차 만들기')
+        # self.get_item_input_box().send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: 우유 사기')
-        self.wait_for_row_in_list_table('2: 차 만들기')
+        # self.wait_for_row_in_list_table('2: 차 만들기')
 
     def test_cannot_add_duplicate_items(self):
         # 에디스는 홈페이지로 가서 새로운 리스트를 시작한다.
         self.browser.get(self.live_server_url)
-        self.get_item_input_box().send_keys('Buy wellies')
-        self.get_item_input_box().send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Buy wellies')
+        self.add_list_item('Buy wellies)')
 
         # 그녀는 실수로 똑같은 아이템을 입력했다.
         self.get_item_input_box().send_keys('Buy wellies')
@@ -57,9 +57,8 @@ class ItemValidationTest(FunctionalTest):
     def test_error_messages_are_cleared_on_input(self):
         # 에디스는 새로운 리스트를 시작하고 validation error 를 야기시켰다.
         self.browser.get(self.live_server_url)
-        self.get_item_input_box().send_keys('Banter too thick')
-        self.get_item_input_box().send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Banter too thick')
+        self.add_list_item('Banter too thick')
+
         self.get_item_input_box().send_keys('Banter too thick')
         self.get_item_input_box().send_keys(Keys.ENTER)
 
