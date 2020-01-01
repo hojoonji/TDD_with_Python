@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 from lists.models import Item, List
-from lists.forms import ItemForm, EMPTY_ITEM_ERROR, ExistingListItemForm
+from lists.forms import ItemForm, EMPTY_ITEM_ERROR, ExistingListItemForm, NewListForm
 
 
 # Create your views here.
@@ -35,6 +35,11 @@ def new_list(request):
         return redirect(list_)
     else:
         return render(request, 'home.html', {'form': form})
+
+def new_list2(request):
+    form = NewListForm(data=request.POST)
+    list_ = form.save(owner=request.user)
+    return redirect(list_)
 
 
 def my_lists(request, email):

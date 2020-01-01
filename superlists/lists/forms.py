@@ -25,6 +25,11 @@ class ItemForm(forms.models.ModelForm):
         self.instance.list = for_list
         return super().save()
 
+
+class NewListForm(object):
+    pass
+
+
 class ExistingListItemForm(ItemForm):
     def __init__(self, for_list, *args, **kwargs):
         super().__init__(*args, **kwargs)
