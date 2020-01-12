@@ -7,7 +7,11 @@ class List(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('view_list', args=[self.id,])
+        return reverse('view_list', args=[self.id])
+
+    @property
+    def name(self):
+        return self.item_set.first().text
 
     @staticmethod
     def create_new(first_item_text, owner=None):
