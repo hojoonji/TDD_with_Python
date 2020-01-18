@@ -33,6 +33,7 @@ class SendLoginEmailViewTeest(TestCase):
         token = Token.objects.first()
         self.assertEqual(token.email, 'healblue@icloud.com')
 
+    @patch('accounts.views.send_mail')
     def test_sends_link_to_login_using_token_uid(self, mock_send_mail):
         self.client.post('/accounts/send_login_email', data={'email': 'healblue@icloud.com'})
         token = Token.objects.first()
