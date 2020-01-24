@@ -121,10 +121,6 @@ class FunctionalTest(StaticLiveServerTestCase):
             timestamp=timestamp
         )
 
-
-
-
-
     @wait
     def wait_for(self, fn):
         return fn()
