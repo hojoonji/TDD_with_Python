@@ -13,6 +13,7 @@ from .server_tools import reset_database
 
 from .management.commands.create_session import  create_pre_authenticated_session
 from .server_tools import create_session_on_server
+from .list_page import ListPage
 
 MAX_WAIT = 10
 SCREEN_DUMP_LOCATION = os.path.join(
@@ -35,6 +36,12 @@ def wait(fn):
 
 
 class FunctionalTest(StaticLiveServerTestCase):
+    
+    def __init__(self):
+        self.list_page = ListPage(self)
+        
+    
+    
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

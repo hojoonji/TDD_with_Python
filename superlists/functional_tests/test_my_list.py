@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from .base import FunctionalTest
+from .list_page import ListPage
+
 
 User = get_user_model()
 
@@ -9,6 +11,8 @@ class MyListTest(FunctionalTest):
     def test_logged_in_users_lists_are_saved_as_my_lists(self):
         # edith는 logged in user다.
         self.create_pre_authenticated_session('edith@example.com')
+
+        list_page = ListPage(self)
 
         # 그녀는 홈페이지로 가서 리스트를 시작했다.
         self.browser.get(self.live_server_url)
