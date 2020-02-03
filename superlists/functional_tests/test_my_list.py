@@ -12,12 +12,11 @@ class MyListTest(FunctionalTest):
         # edith는 logged in user다.
         self.create_pre_authenticated_session('edith@example.com')
 
-        list_page = ListPage(self)
 
         # 그녀는 홈페이지로 가서 리스트를 시작했다.
         self.browser.get(self.live_server_url)
-        self.add_list_item('Reticulate splines')
-        self.add_list_item('Immanetize eschaton')
+        list_page = ListPage(self).add_list_item('Reticulate splines')
+        list_page.add_list_item('Immanetize eschaton')
         first_list_url = self.browser.current_url
 
         # 그녀는 처음으로 "My lists" 링크를 알아챘다.
@@ -30,7 +29,7 @@ class MyListTest(FunctionalTest):
 
         # 그녀는 새로운 리스트를 시작하기로 했다.
         self.browser.get(self.live_server_url)
-        self.add_list_item('Click cows')
+        list_page.add_list_item('Click cows')
         second_list_url = self.browser.current_url
 
         # "My lists" 밑에 새로운 리스트가 나타났다.

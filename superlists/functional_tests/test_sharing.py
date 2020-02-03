@@ -2,6 +2,9 @@ from selenium import webdriver
 from .base import FunctionalTest
 from .list_page import ListPage
 
+from unittest import skip
+
+
 
 def quit_if_possible(brower):
     try:
@@ -12,6 +15,7 @@ def quit_if_possible(brower):
 
 class SharingTest(FunctionalTest):
 
+    @skip
     def test_can_share_a_list_with_another_user(self):
         # 에디스는 login 한 user다.
         self.create_pre_authenticated_session('edith@example.com')

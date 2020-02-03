@@ -1,5 +1,6 @@
 import os 
 from .base import FunctionalTest
+from .list_page import ListPage
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -14,13 +15,15 @@ class LayoutAndStylingTest(FunctionalTest):
         self.browser.set_window_size(1024, 768)
 
         # 화면에 입력박스가 가운데에 위치하고 있다.
-        inputbox = self.get_item_input_box()
+        list_page = ListPage(self)
+        inputbox = list_page.get_item_input_box()
         self.assertAlmostEqual(inputbox.location['x'] + inputbox.size['width'] / 2, 512, delta=10)
 
         # 그녀는 새로운 리스트를 시작했고 역시나 가운데 정렬이 된 입력상자를 보았다.
         inputbox.send_keys('testing')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: testing')
 
-        inputbox = self.get_item_input_box()
+        list_page.wait_for_row_in_list_table('testing', '1')
+
+        inputbox = list_page.get_item_input_box()
         self.assertAlmostEqual(inputbox.location['x'] + inputbox.size['width'] / 2, 512, delta=10)
