@@ -7,6 +7,9 @@ class ListPage(object):
     def __init__(self, test):
         self.test = test
 
+    def get_list_owner(self):
+        return self.test.browser.find_element_by_id('id_list_owner').text
+
     def get_table_rows(self):
         return self.test.browser.find_elements_by_css_selector('#id_list_table tr')
 

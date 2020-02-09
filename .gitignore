@@ -5,3 +5,4 @@
 /superlists/static/
 .env
 /superlists/Pipfile
+/superlists/functional_tests/screendumps

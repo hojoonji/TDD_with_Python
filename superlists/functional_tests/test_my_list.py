@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from .base import FunctionalTest
 from .list_page import ListPage
+from .my_lists_page import MyListsPage
 
 
 User = get_user_model()
@@ -29,10 +30,12 @@ class MyListTest(FunctionalTest):
 
         # 그녀는 새로운 리스트를 시작하기로 했다.
         self.browser.get(self.live_server_url)
+
         list_page.add_list_item('Click cows')
         second_list_url = self.browser.current_url
 
         # "My lists" 밑에 새로운 리스트가 나타났다.
+
         self.browser.find_element_by_link_text('My lists').click()
         self.wait_for(lambda: self.browser.find_element_by_link_text('Click cows'))
         self.browser.find_element_by_link_text('Click cows').click()
